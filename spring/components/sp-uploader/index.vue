@@ -2,7 +2,7 @@
   <div class="sa-uploader" :style="{ width: mode === 'input' ? '100%' : '' }">
     <template v-if="mode === 'cert'">
       <uploader-cert
-        :url="url"
+        :url="modelValue"
         :placeholder="placeholder"
         @success="onSuccess"
       ></uploader-cert>
@@ -37,7 +37,7 @@
 
 <script lang="ts">
 export default {
-  name: "SaUploader",
+  name: "SpUploader",
 };
 </script>
 
@@ -71,10 +71,10 @@ const emit = defineEmits(["update:modelValue"]);
 
 const props = withDefaults(
   defineProps<{
-    url: string | string[];
+    modelValue: string | string[];
+    mode?: "input" | "card" | "cert";
     placeholder?: string;
     fileType?: "all" | "image" | "audio" | "video" | "other";
-    mode?: "input" | "card" | "cert";
     action?: FileManagerInterface["action"];
     saveLog?: FileManagerInterface["savelog"];
     /**
@@ -106,6 +106,6 @@ const props = withDefaults(
 );
 
 function onSuccess(value) {
-  emit("update:url", value);
+  emit("update:modelValue", value);
 }
 </script>
