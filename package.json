@@ -1,0 +1,19 @@
+{
+    "name": "@yiper.fan/spring-common",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "files": [
+        "spring",
+        "index.ts"
+    ],
+    "packageManager": "pnpm@7.0.0",
+    "dependencies": {
+        "vue": "^3.2.47"
+    }
+}
