@@ -1,6 +1,6 @@
 {
     "name": "@yiper.fan/spring-common",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "",
     "main": "index.ts",
     "scripts": {
@@ -19,5 +19,4 @@
         "element-plus": "^2.2.33",
         "lodash": "^4.17.21"
     }
-
 }
