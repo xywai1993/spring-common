@@ -4,7 +4,7 @@
 import $storage from "../utils/storage";
 import { currentUser, getServerMenu, login } from "../api";
 import { createRoutesAndMenus } from "../router/generator-router";
-import { menusSetting } from "../config";
+import { setting } from "../config";
 
 import { defineStore } from "pinia";
 import js_md5 from "js-md5";
@@ -50,7 +50,7 @@ export const useAccountStore = defineStore({
 
     async afterLogin() {
       await this.getInfo();
-      if (menusSetting.serverMenus) {
+      if (setting.serverMenus) {
         //todo: 拉取服务端菜单 const serverData = await(serverApi);
         const { data } = await getServerMenu();
         const { menus } = createRoutesAndMenus(data.list);
@@ -59,7 +59,7 @@ export const useAccountStore = defineStore({
         this.menus = router
           .getRoutes()
           .filter((item) =>
-            menusSetting.subMenu ? item.children.length : !item.children.length
+            setting.subMenu ? item.children.length : !item.children.length
           )
           .filter((item) => !item.meta.hideInMenu);
       }
