@@ -1,4 +1,4 @@
-import Clipboard from "spring/utils/clipboard";
+import Clipboard from "clipboard";
 import { ElMessage } from "element-plus";
 /**
  * @description 复制数据

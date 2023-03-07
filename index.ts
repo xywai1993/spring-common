@@ -40,6 +40,8 @@ export async function setupSpring(app: App) {
 
   // 系统初始化
   await useAppStore(pinia).init();
+
+  console.log("hahahahh");
 }
 
 export default spring;

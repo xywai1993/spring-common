@@ -9,7 +9,7 @@
     </template>
     <template v-if="mode === 'card'">
       <uploader-card
-        :url="url"
+        :url="modelValue"
         :action="action"
         :savelog="saveLog"
         :group="group"
@@ -22,7 +22,7 @@
     </template>
     <template v-if="mode === 'input'">
       <uploader-input
-        :url="url"
+        :url="modelValue"
         :action="action"
         :savelog="saveLog"
         :group="group"
