@@ -1,14 +1,14 @@
 /**
  * @description 用户信息、登录、退出登录
  */
-import $storage from '@/spring/utils/storage';
-import { currentUser, getServerMenu, login } from '../api/index';
-import { createRoutesAndMenus } from '@/spring/router/generator-router';
-import { menusSetting } from '../config';
+import $storage from "../utils/storage";
+import { currentUser, getServerMenu, login } from "../api";
+import { createRoutesAndMenus } from "../router/generator-router";
+import { menusSetting } from "../config";
 
-import { defineStore } from 'pinia';
-import js_md5 from 'js-md5';
-import router from '../router';
+import { defineStore } from "pinia";
+import js_md5 from "js-md5";
+import router from "../router";
 
 type AccountStoreType = {
   isLogin: boolean;
@@ -23,13 +23,13 @@ type AccountStoreType = {
 };
 
 export const useAccountStore = defineStore({
-  id: 'account',
+  id: "account",
   state: () =>
     ({
-      isLogin: !!$storage.get('token'),
+      isLogin: !!$storage.get("token"),
       info: {
-        username: '',
-        avatar: '',
+        username: "",
+        avatar: "",
       },
       menus: [], // 菜单权限
       d_menus: [], // 动态路由
@@ -58,7 +58,9 @@ export const useAccountStore = defineStore({
       } else {
         this.menus = router
           .getRoutes()
-          .filter((item) => (menusSetting.subMenu ? item.children.length : !item.children.length))
+          .filter((item) =>
+            menusSetting.subMenu ? item.children.length : !item.children.length
+          )
           .filter((item) => !item.meta.hideInMenu);
       }
 
@@ -68,14 +70,14 @@ export const useAccountStore = defineStore({
      * @description 设置token
      * @param {*} token
      */
-    setToken(token = '') {
+    setToken(token = "") {
       this.token = token;
-      if (token === '') {
+      if (token === "") {
         this.isLogin = false;
-        $storage.remove('token');
+        $storage.remove("token");
       } else {
         this.isLogin = true;
-        $storage.set('token', token);
+        $storage.set("token", token);
       }
     },
 

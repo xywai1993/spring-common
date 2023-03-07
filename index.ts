@@ -17,22 +17,23 @@ dayjs.extend(relativeTime);
 import { pinia } from "./spring/store";
 import $storage from "./spring/utils/storage";
 
-// import { registerGlobalComponents } from "./spring/components";
-// import { registerGlobalDirectives } from "./spring/directives";
+import { registerGlobalComponents } from "./spring/components";
+import { registerGlobalDirectives } from "./spring/directives";
 import { loadTheme } from "./spring/hooks/useTheme";
 import { useAppStore } from "./spring/store/app";
+import { App } from "vue";
 
 const spring = {
   $storage,
 };
 // 核心入口
-export async function setupSpring(app) {
+export async function setupSpring(app: App) {
   app.provide("mitt", mitt);
   // 注册全局组件
-  // registerGlobalComponents(app);
+  registerGlobalComponents(app);
 
   // 注册全局指令
-  // registerGlobalDirectives(app);
+  registerGlobalDirectives(app);
 
   // 主题
   loadTheme();

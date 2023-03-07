@@ -68,7 +68,7 @@ import UploaderInput from "./uploader-input.vue";
 import { FileManagerInterface } from "../sa-file/type";
 
 const emit = defineEmits(["update:modelValue"]);
-
+console.log("test111222");
 const props = withDefaults(
   defineProps<{
     modelValue: string | string[];

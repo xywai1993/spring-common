@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "noLib": false,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "strictFunctionTypes": false,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "preserveValueImports": false,
+    "allowJs": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "esnext"],
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "types": ["node", "vite/client"],
+    "paths": {
+      "@/*": ["spring/*"]
+    }
+  },
+  "include": [
+    "spring/**/*.d.ts",
+    "mock/**/*",
+    "spring/**/*.ts",
+    "spring/**/*.js",
+    "spring/**/*.tsx",
+    "spring/**/*.vue",
+    "spring/**/*.vuex",
+    "types/**/*.d.ts",
+    "auto-import.d.ts",
+    "vite.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js", "**/*.md", "spring/**/*.md"]
+}

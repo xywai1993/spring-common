@@ -1,5 +1,5 @@
-import router from '@/spring/router';
-import { useAppStore } from '@/spring/store/app';
+import router from "../router";
+import { useAppStore } from "../store/app";
 
 /**
  * @description 添加任务栏选项卡
@@ -41,11 +41,13 @@ export function closeTaskbar(name) {
 
   // 如果删除的是当前选项卡，跳转到上次访问的选项卡
   if (historyKey == 0) {
-    let currentKey = taskbar.list.findIndex((v) => v.name == taskbar.history[0]);
+    let currentKey = taskbar.list.findIndex(
+      (v) => v.name == taskbar.history[0]
+    );
     if (taskbar.list[currentKey]) {
       router.push(taskbar.list[currentKey].path);
     } else {
-      router.push('/');
+      router.push("/");
     }
   }
   appStore.setTaskbar(taskbar);

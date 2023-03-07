@@ -1,6 +1,6 @@
-import { isString } from 'lodash';
-import { buildShortUUID } from '@/spring/utils';
-import { markRaw, ref } from 'vue';
+import { isString } from "lodash";
+import { buildShortUUID } from "../../utils";
+import { markRaw, ref } from "vue";
 
 export type ModalType = {
   id: string;
@@ -33,10 +33,10 @@ export type ModalType = {
 };
 
 export const modal = ref<ModalType>({
-  id: '',
+  id: "",
   component: {},
   dialog: {
-    title: '',
+    title: "",
   },
   params: {},
   show: false,
@@ -46,10 +46,10 @@ export const modal = ref<ModalType>({
 });
 
 export const useGlobalModal = async (options: {
-  component: ModalType['component'];
-  params?: ModalType['params'];
-  dialog?: ModalType['dialog'];
-  callback?: ModalType['callback'];
+  component: ModalType["component"];
+  params?: ModalType["params"];
+  dialog?: ModalType["dialog"];
+  callback?: ModalType["callback"];
 }) => {
   let com = null;
   if (isString(options.component)) {
@@ -58,7 +58,7 @@ export const useGlobalModal = async (options: {
   com = markRaw(options.component);
 
   modal.value = {
-    id: buildShortUUID('modal'),
+    id: buildShortUUID("modal"),
     component: com,
     params: options.params ?? {},
     dialog: options.dialog,
