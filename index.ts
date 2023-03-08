@@ -1,4 +1,3 @@
-import { onBeforeUpdate, ref } from "vue";
 // 极验
 import "./spring/utils/gt";
 // 图片剪裁
@@ -15,21 +14,16 @@ dayjs.locale("zh-cn");
 dayjs.extend(relativeTime);
 
 import { pinia } from "./spring/store";
-import $storage from "./spring/utils/storage";
-
 import { registerGlobalComponents } from "./spring/components";
 import { registerGlobalDirectives } from "./spring/directives";
 import { loadTheme } from "./spring/hooks/useTheme";
 import { useAppStore } from "./spring/store/app";
 import { App } from "vue";
-import { setSystemConfig, SpringOptions } from "./spring/config";
+import { setting, SpringOptions } from "./spring/config";
 import "./spring/tailwind.css";
 
-const spring = {
-  $storage,
-};
 // 核心入口
-export async function setupSpring(app: App, options: SpringOptions = {}) {
+export async function setupSpring(app: App) {
   app.provide("mitt", mitt);
   // 注册全局组件
   registerGlobalComponents(app);
@@ -37,7 +31,7 @@ export async function setupSpring(app: App, options: SpringOptions = {}) {
   // 注册全局指令
   registerGlobalDirectives(app);
 
-  setSystemConfig(options);
+  // setSystemConfig(options);
 
   // 主题
   loadTheme();
@@ -46,4 +40,16 @@ export async function setupSpring(app: App, options: SpringOptions = {}) {
   await useAppStore(pinia).init();
 }
 
-export default spring;
+export function setSystemConfig(options: SpringOptions = {}) {
+  for (const option in options) {
+    if (Object.hasOwn(setting, option)) {
+      setting[option] = options[option];
+    }
+  }
+
+  console.log(setting, "???");
+}
+
+export { setupI18n } from "./spring/plugin/i18n";
+export { setupStore } from "./spring/store";
+export { setupRouter } from "./spring/router";

@@ -6,6 +6,7 @@ import $storage from "../utils/storage";
 import { getBrowser } from "../utils";
 import { defineStore } from "pinia";
 import { getSiteConf } from "../api";
+import { setting } from "../config";
 
 const browser = getBrowser();
 
@@ -52,6 +53,7 @@ const app = defineStore({
      * @description 初始化信息
      */
     async init() {
+      console.log(setting, 100);
       getSiteConf().then((d) => {
         this.info = d.data;
       });

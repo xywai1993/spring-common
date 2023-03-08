@@ -56,10 +56,13 @@ export const useAccountStore = defineStore({
         const { menus } = createRoutesAndMenus(data.list);
         this.menus = menus;
       } else {
+        console.log(setting, 90);
         this.menus = router
           .getRoutes()
           .filter((item) =>
-            setting.subMenu ? item.children.length : !item.children.length
+            setting.subMenu
+              ? Boolean(item.children.length)
+              : !item.children.length
           )
           .filter((item) => !item.meta.hideInMenu);
       }

@@ -50,19 +50,3 @@ export interface SpringOptions {
   chat?: boolean;
   notice?: boolean;
 }
-
-export function setSystemConfig(options: SpringOptions = {}) {
-  setting = Object.assign(
-    {
-      baseUrl: "",
-      multiLanguage: false,
-      chat: false,
-      notice: false,
-      serverMenus: false,
-      subMenu: false,
-    },
-    options
-  );
-
-  console.log(setting);
-}
