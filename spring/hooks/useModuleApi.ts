@@ -1,5 +1,5 @@
-import { request, RequestOptions } from "@/request";
-import { EXPORT } from "@/request/export";
+import { request, RequestOptions } from "../request";
+import { EXPORT } from "../request/export";
 
 type GetListType = {
   list: any[];

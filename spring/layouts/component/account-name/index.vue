@@ -42,7 +42,7 @@ const handleCommand = async (command) => {
     <span class="avatar-dropdown">
       <el-avatar class="user-avatar" />
       <div class="user-name">
-        <span class="hidden-xs-only mr-1">{{ userStore.info.username }}</span>
+        <span class="hidden-xs-only mr-1">{{ userStore.info?.username }}</span>
         <sa-icon :icon="active ? 'ep:arrow-up' : 'ep:arrow-down'" />
       </div>
     </span>

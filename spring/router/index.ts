@@ -3,7 +3,7 @@ import { rootRoute, errorRoutes, loginRoute } from "./basic";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { setupRouterGuard } from "./guard";
 
-// import { routeList } from "../router";
+// import { routeList } from "@/router";
 
 export const routes: RouteRecordRaw[] = [
   rootRoute,
@@ -17,8 +17,13 @@ const router = createRouter({
   routes,
 });
 
-export function setupRouter(app) {
+export function setupRouter(app, list: RouteRecordRaw[]) {
   // registerDynamicRoutes(router);
+
+  list.forEach((item) => {
+    router.addRoute(item);
+  });
+
   app.use(router);
   setupRouterGuard(router);
   return router;

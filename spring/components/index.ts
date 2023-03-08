@@ -1,8 +1,10 @@
-import * as ElementPlusIconsVue from '@element-plus/icons-vue';
-import { isEmpty } from 'lodash';
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import { isEmpty } from "lodash";
 
 export function registerGlobalComponents(app) {
-  const globalComponents = import.meta.glob('./**/*.global.vue', { eager: true });
+  const globalComponents = import.meta.glob("./**/*.global.vue", {
+    eager: true,
+  });
   Object.keys(globalComponents).forEach((key) => {
     const component = globalComponents[key].default;
     if (!isEmpty(component)) {
