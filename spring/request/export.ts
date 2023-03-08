@@ -1,43 +1,43 @@
-import { request } from './index';
+import { request } from "./index";
 
 // 导出并自动下载
 export const EXPORT = async (url, params) => {
   const res = await request(
     {
       url,
-      method: 'GET',
+      method: "GET",
       params,
-      responseType: 'blob',
+      responseType: "blob",
       timeout: 800000,
     },
     {
       isGetDataDirectly: false,
-    },
+    }
   );
-  const contentType = res.headers['content-type'];
+  const contentType = res.headers["content-type"];
   const filename = `${params.filename}.${params.doc_type}`;
 
   const downloadurl = window.URL.createObjectURL(new Blob([res.data]));
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = downloadurl;
-  link.setAttribute('download', decodeURIComponent(filename));
+  link.setAttribute("download", decodeURIComponent(filename));
   document.body.appendChild(link);
   link.click();
 };
 
 export const IMPORT = async (url, data) => {
-  const res = await request(
+  await request(
     {
       url,
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'multipart/form-data;',
+        "Content-Type": "multipart/form-data;",
       },
       data,
       timeout: 800000,
     },
     {
       isGetDataDirectly: false,
-    },
+    }
   );
 };

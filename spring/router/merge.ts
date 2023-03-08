@@ -1,5 +1,5 @@
 import { isEmpty, isArray } from "lodash";
-import { useAccountStore } from "@/store/account";
+import { useAccountStore } from "../store/account";
 
 // 页面路由
 const appRoutes = [];
