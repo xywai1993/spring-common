@@ -22,12 +22,14 @@ import { registerGlobalDirectives } from "./spring/directives";
 import { loadTheme } from "./spring/hooks/useTheme";
 import { useAppStore } from "./spring/store/app";
 import { App } from "vue";
+import { setSystemConfig, SpringOptions } from "./spring/config";
+import "./spring/tailwind.css";
 
 const spring = {
   $storage,
 };
 // 核心入口
-export async function setupSpring(app: App) {
+export async function setupSpring(app: App, options: SpringOptions = {}) {
   app.provide("mitt", mitt);
   // 注册全局组件
   registerGlobalComponents(app);
@@ -35,13 +37,13 @@ export async function setupSpring(app: App) {
   // 注册全局指令
   registerGlobalDirectives(app);
 
+  setSystemConfig(options);
+
   // 主题
   loadTheme();
 
   // 系统初始化
   await useAppStore(pinia).init();
-
-  console.log("hahahahh");
 }
 
 export default spring;

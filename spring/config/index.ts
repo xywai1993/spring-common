@@ -43,7 +43,7 @@ export let setting = {
   subMenu: false,
 };
 
-interface SystemOptions {
+export interface SpringOptions {
   /**
    * 是否需要拉取服务端菜单
    */
@@ -60,7 +60,7 @@ interface SystemOptions {
   notice?: boolean;
 }
 
-export function setSystemConfig(options: SystemOptions = {}) {
+export function setSystemConfig(options: SpringOptions = {}) {
   setting = Object.assign(
     {
       multiLanguage: false,

@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.ts",
     "scripts": {
+        "tailwind": "npx tailwindcss -o spring/tailwind.css",
         "publish": "npm -i --registry=https://registry.npmjs.org/ && npm publish"
     },
     "author": "yiper.fan",

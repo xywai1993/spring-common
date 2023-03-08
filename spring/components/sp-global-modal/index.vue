@@ -1,6 +1,8 @@
 <template>
   <el-dialog
+    v-for="(modal, index) in modalList"
     v-model="modal.show"
+    :key="modal.id"
     :close-on-click-modal="false"
     :show-close="false"
     :fullscreen="modal.fullscreen"
@@ -12,18 +14,18 @@
     <template #header>
       <div class="title">
         <span>
-          {{ title }}
+          {{ checkTitle(modal) }}
         </span>
       </div>
       <div class="tools-wrap sa-flex">
         <div
           v-if="!isMobile()"
           class="sa-flex sa-row-center sa-m-l-8"
-          @click="fullscreen()"
+          @click="fullscreen(index)"
         >
           <sa-svg name="sa-zoomin" size="16"></sa-svg>
         </div>
-        <div class="sa-flex sa-row-center sa-m-l-8" @click="close">
+        <div class="sa-flex sa-row-center sa-m-l-8" @click="close(index)">
           <sa-svg name="sa-close" size="16"></sa-svg>
         </div>
       </div>
@@ -31,7 +33,7 @@
     <component
       :is="modal.component"
       :params="modal.params"
-      @modalCallBack="modalCallBack($event)"
+      @modalCallBack="modalCallBack(index, $event)"
     />
   </el-dialog>
 </template>
@@ -44,46 +46,53 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { reactive, markRaw, computed } from "vue";
+import { reactive, markRaw, shallowRef, triggerRef } from "vue";
 import { buildShortUUID, isMobile } from "../../utils";
-import { modal } from "./main";
+import { modalList, ModalType } from "./main";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const title = computed(() => {
-  if (modal.value.dialog?.title) {
-    return modal.value.dialog?.title;
+
+const checkTitle = (modal: ModalType) => {
+  if (modal.dialog?.title) {
+    return modal.dialog?.title;
   }
 
-  if (modal.value.params.id) {
+  if (modal.params?.id) {
     return t("edit");
   } else {
     return t("add");
   }
-});
+};
 
 // 全屏/还原
-function fullscreen() {
-  modal.value.fullscreen = !modal.value.fullscreen;
-  if (modal.value.callback.fullscreen) {
-    modal.value.callback.fullscreen();
+function fullscreen(index) {
+  const modal = modalList.value[index];
+  modal.fullscreen = !modal.fullscreen;
+  triggerRef(modalList);
+  if (modal.callback.fullscreen) {
+    modal.callback.fullscreen();
   }
 }
 
 // 关闭
-function close() {
-  modal.value.show = false;
-  if (modal.value.dialog?.destroyModal !== false) {
-    modal.value.component = null;
+function close(index) {
+  const modal = modalList.value[index];
+  modal.show = false;
+  if (modal.dialog?.destroyModal !== false) {
+    modal.component = null;
   }
+  modalList.value.splice(index, 1);
+  triggerRef(modalList);
 }
 
 // 模态框数据回调
-function modalCallBack(data: { event: string; data: any }) {
-  if (modal.value.callback[data.event]) {
-    modal.value.callback[data.event]?.(data.data);
+function modalCallBack(index, data: { event: string; data: any }) {
+  const modal = modalList.value[index];
+  if (modal.callback[data.event]) {
+    modal.callback[data.event]?.(data.data);
   }
-  close();
+  close(index);
 }
 </script>
 <style lang="scss">

@@ -28,7 +28,6 @@
               <sa-svg
                 class="open-icon"
                 :style="{
-                  '-webkit-animation': `rotating ${rotateSpeed}s linear infinite`,
                   animation: `rotating ${rotateSpeed}s linear infinite`,
                 }"
                 name="sa-shop-refresh"

@@ -1,6 +1,10 @@
+/**
+ * @update  2023年02月14日15:32:34  现已支持多个modal在同一个页面显示
+ */
+
 import { isString } from "lodash";
 import { buildShortUUID } from "../../utils";
-import { markRaw, ref } from "vue";
+import { markRaw, ref, shallowRef, triggerRef } from "vue";
 
 export type ModalType = {
   id: string;
@@ -45,6 +49,8 @@ export const modal = ref<ModalType>({
   callback: {},
 });
 
+export const modalList = shallowRef<ModalType[]>([]);
+
 export const useGlobalModal = async (options: {
   component: ModalType["component"];
   params?: ModalType["params"];
@@ -54,10 +60,11 @@ export const useGlobalModal = async (options: {
   let com = null;
   if (isString(options.component)) {
     com = await import(/* @vite-ignore */ options.component);
+  } else {
+    com = markRaw(options.component);
   }
-  com = markRaw(options.component);
 
-  modal.value = {
+  modalList.value.push({
     id: buildShortUUID("modal"),
     component: com,
     params: options.params ?? {},
@@ -66,5 +73,17 @@ export const useGlobalModal = async (options: {
     fullscreen: false,
     minimize: false,
     callback: options.callback ?? {},
-  };
+  });
+  triggerRef(modalList);
+
+  // modal.value = {
+  //   id: buildShortUUID('modal'),
+  //   component: com,
+  //   params: options.params ?? {},
+  //   dialog: options.dialog,
+  //   show: true,
+  //   fullscreen: false,
+  //   minimize: false,
+  //   callback: options.callback ?? {},
+  // };
 };

@@ -54,86 +54,86 @@
 </template>
 
 <script>
-  export default {
-    name: 'UploaderItem',
-  };
+export default {
+  name: "UploaderItem",
+};
 </script>
 
 <script setup>
-  import { ref, watch } from 'vue';
-  import { checkUrl } from '@/spring/utils/checkUrlSuffix';
-  import SaDraggable from 'vuedraggable';
+import { ref, watch } from "vue";
+import { checkUrl } from "../../utils/checkUrlSuffix";
+import SaDraggable from "vuedraggable";
 
-  const emit = defineEmits(['action']);
-  const props = defineProps(['urlList', 'multiple', 'fileType', 'size']);
+const emit = defineEmits(["action"]);
+const props = defineProps(["urlList", "multiple", "fileType", "size"]);
 
-  const urlList = ref(props.urlList || []);
-  watch(
-    () => props.urlList,
-    () => {
-      urlList.value = props.urlList;
-    },
-  );
-
-  const previewVisible = ref(false);
-  const previewUrl = ref(null);
-  function previewViewer(url) {
-    previewUrl.value = checkUrl(url, 50);
-    previewVisible.value = true;
+const urlList = ref(props.urlList || []);
+watch(
+  () => props.urlList,
+  () => {
+    urlList.value = props.urlList;
   }
+);
 
-  function removeFile(index) {
-    urlList.value.splice(index, 1);
-    emit('action', urlList.value);
-  }
+const previewVisible = ref(false);
+const previewUrl = ref(null);
+function previewViewer(url) {
+  previewUrl.value = checkUrl(url, 50);
+  previewVisible.value = true;
+}
+
+function removeFile(index) {
+  urlList.value.splice(index, 1);
+  emit("action", urlList.value);
+}
 </script>
 
 <style lang="scss" scoped>
-  .uploader-item {
-    width: 56px;
-    height: 56px;
-    border: 1px solid var(--sa-border);
-    border-radius: 4px;
-    margin: 0 8px 8px 0;
+.uploader-item {
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--sa-border);
+  border-radius: 4px;
+  margin: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  .card-mask {
+    position: absolute;
+    // top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    color: var(--sa-basic-mask-color);
+    background: var(--sa-basic-mask-background);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    display: none;
+    .el-icon {
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    .card-mask {
+      display: flex;
+    }
+  }
+  .el-image {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .image-slot {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
-    .card-mask {
-      position: absolute;
-      // top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      height: 20px;
-      color: var(--sa-basic-mask-color);
-      background: var(--sa-basic-mask-background);
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      display: none;
-      .el-icon {
-        font-size: 12px;
-        cursor: pointer;
-      }
-    }
-    &:hover {
-      .card-mask {
-        display: flex;
-      }
-    }
-    .el-image {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
-    .image-slot {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
+    height: 100%;
   }
+}
 </style>
