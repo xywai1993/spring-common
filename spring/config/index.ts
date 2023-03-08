@@ -1,15 +1,4 @@
 // 设置请求基础配置
-let baseURL;
-switch (import.meta.env.MODE) {
-  case "development":
-    baseURL = import.meta.env.SPRING_DEV_BASE_URL;
-    break;
-  case "development-mock":
-    baseURL = import.meta.env.SPRING_DEV_MOCK_URL;
-    break;
-  default:
-    baseURL = import.meta.env.SPRING_BASE_URL;
-}
 
 /**
  * 菜单设置
@@ -27,6 +16,7 @@ export const menusSetting = {
 };
 
 export let setting = {
+  baseUrl: "",
   /**
    * 开启多语言
    */
@@ -44,6 +34,7 @@ export let setting = {
 };
 
 export interface SpringOptions {
+  baseUrl?: string;
   /**
    * 是否需要拉取服务端菜单
    */
@@ -63,6 +54,7 @@ export interface SpringOptions {
 export function setSystemConfig(options: SpringOptions = {}) {
   setting = Object.assign(
     {
+      baseUrl: "",
       multiLanguage: false,
       chat: false,
       notice: false,
@@ -71,6 +63,6 @@ export function setSystemConfig(options: SpringOptions = {}) {
     },
     options
   );
-}
 
-export { baseURL };
+  console.log(setting);
+}

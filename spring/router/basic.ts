@@ -1,12 +1,12 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from "vue-router";
 
 export const rootRoute: RouteRecordRaw = {
-  path: '/',
-  name: 'Layout',
-  redirect: { name: 'dashboard.dashboard' },
-  component: () => import('@/spring/layouts/index.vue'),
+  path: "/",
+  name: "Layout",
+  redirect: { name: "dashboard.dashboard" },
+  component: () => import("../layouts/index.vue"),
   meta: {
-    title: 'menu.home',
+    title: "menu.home",
     taskbar: false,
     hideInMenu: true,
   },
@@ -15,11 +15,11 @@ export const rootRoute: RouteRecordRaw = {
 
 // 登录
 export const loginRoute: RouteRecordRaw = {
-  path: '/login',
-  name: 'Login',
-  component: () => import('@/spring/views/login/index.vue'),
+  path: "/login",
+  name: "Login",
+  component: () => import("../views/login/index.vue"),
   meta: {
-    title: '登录',
+    title: "登录",
     login: false,
     hideInMenu: true,
     hideInTabs: true,
@@ -29,40 +29,40 @@ export const loginRoute: RouteRecordRaw = {
 // 错误页面
 export const errorRoutes: RouteRecordRaw[] = [
   {
-    path: '/error',
-    name: 'Error',
-    component: () => import('@/spring/layouts/index.vue'),
+    path: "/error",
+    name: "Error",
+    component: () => import("../layouts/index.vue"),
     meta: {
-      title: '错误页面',
+      title: "错误页面",
       hideInMenu: true,
     },
     children: [
       {
-        path: '404',
-        name: 'NotFoundPage',
-        component: () => import('@/spring/views/error/404.vue'),
+        path: "404",
+        name: "NotFoundPage",
+        component: () => import("../views/error/404.vue"),
         meta: {
-          title: '未找到页面',
+          title: "未找到页面",
           hideInTabs: true,
           hideInMenu: true,
         },
       },
       {
-        path: '401',
-        name: 'NotLogin',
-        component: () => import('@/spring/views/error/401.vue'),
+        path: "401",
+        name: "NotLogin",
+        component: () => import("../views/error/401.vue"),
         meta: {
-          title: '请先登录',
+          title: "请先登录",
           hideInTabs: true,
           hideInMenu: true,
         },
       },
       {
-        path: '403',
-        name: 'Forbidden',
-        component: () => import('@/spring/views/error/403.vue'),
+        path: "403",
+        name: "Forbidden",
+        component: () => import("../views/error/403.vue"),
         meta: {
-          title: '暂无权限访问',
+          title: "暂无权限访问",
           hideInTabs: true,
           hideInMenu: true,
         },
@@ -70,8 +70,8 @@ export const errorRoutes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/:catchAll(.*)',
-    redirect: '/error/404',
+    path: "/:catchAll(.*)",
+    redirect: "/error/404",
     meta: {
       hideInTabs: true,
       hideInMenu: true,

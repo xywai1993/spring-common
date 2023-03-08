@@ -2,7 +2,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import $storage from "../utils/storage";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { baseURL } from "../config";
+import { baseURL, setting } from "../config";
 import { useAccountStore } from "../store/account";
 import { useAppStore } from "../store/app";
 
@@ -16,7 +16,7 @@ export type Response<T = any> = {
  * @description axios
  */
 const service = axios.create({
-  baseURL,
+  baseURL: setting.baseUrl,
   timeout: 6000,
   method: "GET",
   headers: {
@@ -36,6 +36,7 @@ service.interceptors.request.use(
     if (token && config.headers) {
       config.headers["Authorization"] = "ddr " + token;
     }
+    config.baseURL = setting.baseUrl;
     return config;
   },
   (error) => {
@@ -114,6 +115,8 @@ export const request = async <T = any>(
   config: AxiosRequestConfig,
   options: RequestOptions = {}
 ): Promise<T> => {
+  console.log(config, options, "request");
+
   try {
     const { isGetDataDirectly = true, successMessage } = options;
     const res = await service.request(config);

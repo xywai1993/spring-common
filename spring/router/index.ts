@@ -3,11 +3,11 @@ import { rootRoute, errorRoutes, loginRoute } from "./basic";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { setupRouterGuard } from "./guard";
 
-import { routeList } from "@/router";
+// import { routeList } from "../router";
 
 export const routes: RouteRecordRaw[] = [
   rootRoute,
-  ...routeList,
+  // ...routeList,
   loginRoute,
   ...errorRoutes,
 ];

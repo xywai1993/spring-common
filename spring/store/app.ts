@@ -2,36 +2,36 @@
  * @description 应用数据、加载
  */
 
-import $storage from '@/spring/utils/storage';
-import { getBrowser } from '@/spring/utils';
-import { defineStore } from 'pinia';
-import { getSiteConf } from '@/spring/api';
+import $storage from "../utils/storage";
+import { getBrowser } from "../utils";
+import { defineStore } from "pinia";
+import { getSiteConf } from "../api";
 
 const browser = getBrowser();
 
 const app = defineStore({
-  id: 'app',
+  id: "app",
   persist: {
-    key: `${import.meta.env.SPRING_CACHE_PREFIX}store-app`,
-    paths: ['info', 'layout', 'currentAppName', 'language'],
+    key: `spring_store-app`,
+    paths: ["info", "layout", "currentAppName", "language"],
   },
   state: () => ({
     inited: false, // 应用加载状态
     info: {
       // 站点信息
-      host: '',
-      order_prefix: 'MAC',
+      host: "",
+      order_prefix: "MAC",
       root_id: 1,
-      site_desc: '',
-      site_logo: '',
-      site_name: 'Spring',
+      site_desc: "",
+      site_logo: "",
+      site_name: "Spring",
     },
     layout: {
       // 布局
       showTaskbar: true, // 是否显示任务栏
       collapse: browser.isMini,
-      theme: 'element', // 主题
-      darkMode: '', // 暗黑模式 light | dark | system
+      theme: "element", // 主题
+      darkMode: "", // 暗黑模式 light | dark | system
       pageLoading: false,
     },
     browser,
@@ -39,9 +39,9 @@ const app = defineStore({
       list: [], // 任务栏列表
       history: [], // 任务栏访问历史
     },
-    currentAppName: '',
+    currentAppName: "",
     requestCounter: 0, // 请求计数器
-    language: 'zh',
+    language: "zh",
   }),
   getters: {
     // 应用配置
@@ -77,18 +77,18 @@ const app = defineStore({
      * @description 设置主题
      * @param {*} name
      */
-    setTheme(name = '') {
+    setTheme(name = "") {
       this.layout.theme = name;
-      $storage.set('theme', name);
+      $storage.set("theme", name);
     },
 
     /**
      * @description 设置暗黑模式
      * @param {*} name
      */
-    setDarkMode(name = '') {
+    setDarkMode(name = "") {
       this.layout.darkMode = name;
-      $storage.set('darkMode', name);
+      $storage.set("darkMode", name);
     },
 
     /**
@@ -120,7 +120,7 @@ const app = defineStore({
         this.requestCounter = 0;
       }
     },
-    setLanguage(l: 'zh' | 'en') {
+    setLanguage(l: "zh" | "en") {
       this.language = l;
     },
   },

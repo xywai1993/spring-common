@@ -9,13 +9,15 @@
           :icon="menuItem.meta.icon"
         />
       </div>
-      <span>{{ setting.multiLanguage ? $t(menuItem.meta.title) : menuItem.meta.title }}</span>
+      <span>{{
+        setting.multiLanguage ? $t(menuItem.meta.title) : menuItem.meta.title
+      }}</span>
     </template>
     <slot />
   </el-sub-menu>
 </template>
 <script setup>
-  import { setting } from '@/spring/config';
+import { setting } from "../../../../config";
 
-  const props = defineProps(['menuItem']);
+const props = defineProps(["menuItem"]);
 </script>

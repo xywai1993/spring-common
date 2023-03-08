@@ -1,10 +1,10 @@
-import { addTaskbar } from '@/spring/hooks/useTaskbar';
-import { useAccountStore } from '@/spring/store/account';
-import { useAppStore } from '@/spring/store/app';
+import { addTaskbar } from "../hooks/useTaskbar";
+import { useAccountStore } from "../store/account";
+import { useAppStore } from "../store/app";
 
 export function setupRouterGuard(router) {
   router.beforeEach(async (to, from) => {
-    let nextPath = '';
+    let nextPath = "";
 
     const appStore = useAppStore();
 
@@ -23,11 +23,15 @@ export function setupRouterGuard(router) {
         }
         return true;
       } catch (e) {
-        return { name: 'Login', replace: true };
+        return { name: "Login", replace: true };
       }
     } else {
-      if (to.name !== 'Login') {
-        return { name: 'Login', query: { redirect: to.fullPath }, replace: true };
+      if (to.name !== "Login") {
+        return {
+          name: "Login",
+          query: { redirect: to.fullPath },
+          replace: true,
+        };
       }
     }
     return true;

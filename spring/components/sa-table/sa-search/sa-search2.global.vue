@@ -18,7 +18,10 @@
       <template v-if="key == 'tinputprepend'">
         <div v-for="ip in item" :key="ip" class="filter-item sa-flex">
           <div class="filter-content">
-            <el-input v-model="filter.data[ip.key].value" :placeholder="ip.name">
+            <el-input
+              v-model="filter.data[ip.key].value"
+              :placeholder="ip.name"
+            >
               <template #prepend>
                 <el-select
                   v-model="filter.data[ip.key].field"
@@ -52,12 +55,20 @@
             >
               <el-option
                 v-for="o in s.options.data"
-                :key="s.options.props && s.options.props.value ? o[s.options.props.value] : o.value"
+                :key="
+                  s.options.props && s.options.props.value
+                    ? o[s.options.props.value]
+                    : o.value
+                "
                 :label="
-                  s.options.props && s.options.props.label ? o[s.options.props.label] : o.label
+                  s.options.props && s.options.props.label
+                    ? o[s.options.props.label]
+                    : o.label
                 "
                 :value="
-                  s.options.props && s.options.props.value ? o[s.options.props.value] : o.value
+                  s.options.props && s.options.props.value
+                    ? o[s.options.props.value]
+                    : o.value
                 "
               >
               </el-option>
@@ -94,7 +105,10 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              :default-time="[new Date(2000, 1, 1, 0, 0, 0), new Date(2000, 2, 1, 23, 59, 59)]"
+              :default-time="[
+                new Date(2000, 1, 1, 0, 0, 0),
+                new Date(2000, 2, 1, 23, 59, 59),
+              ]"
               :style="{
                 width: c.width + 'px',
               }"
@@ -112,7 +126,7 @@
   </div>
 </template>
 <script>
-  /**
+/**
  * 数据 
  * 1、tinput/tinputprepend/tselect:搜索标签类型; name:提示语; key:字段; value:默认值; width:宽度; option:选项的数据; op:搜素类型
  * 2、类型为tinputprepend key要和field/value对象保持一致
@@ -190,69 +204,71 @@
   ],
 }
  */
-  import { reactive, watchEffect } from 'vue';
-  import { composeFilter } from '@/spring/utils';
-  export default {
-    name: 'SaSearch2',
-  };
+import { reactive, watchEffect } from "vue";
+import { composeFilter } from "../../../utils";
+export default {
+  name: "SaSearch2",
+};
 </script>
 <script setup>
-  const props = defineProps({
-    filterTool: {
-      type: Object,
-    },
-  });
-  const emit = defineEmits(['filterCallback']);
+const props = defineProps({
+  filterTool: {
+    type: Object,
+  },
+});
+const emit = defineEmits(["filterCallback"]);
 
-  let filter = reactive({
-    data: {},
-  });
-  let defaultFilterFields = {};
-  const filterOp = reactive({});
+let filter = reactive({
+  data: {},
+});
+let defaultFilterFields = {};
+const filterOp = reactive({});
 
-  function initData() {
-    for (var key in props.filterTool) {
-      props.filterTool[key].forEach((i) => {
-        if (key == 'tinputprepend') {
-          filter.data[i.key] = JSON.parse(JSON.stringify(i[i.key]));
-          defaultFilterFields[i.key] = JSON.parse(JSON.stringify(i[i.key]));
-          // 可选择的 options
-          i.options.forEach((k) => {
-            filterOp[k.value] = k.op ? k.op : i.op ? i.op : '=';
-          });
-        } else {
-          filter.data[i.key] = i.value ? JSON.parse(JSON.stringify(i.value)) : '';
-          defaultFilterFields[i.key] = i.value ? JSON.parse(JSON.stringify(i.value)) : '';
-          filterOp[i.key] = i.op ? i.op : '=';
-        }
-      });
-    }
+function initData() {
+  for (var key in props.filterTool) {
+    props.filterTool[key].forEach((i) => {
+      if (key == "tinputprepend") {
+        filter.data[i.key] = JSON.parse(JSON.stringify(i[i.key]));
+        defaultFilterFields[i.key] = JSON.parse(JSON.stringify(i[i.key]));
+        // 可选择的 options
+        i.options.forEach((k) => {
+          filterOp[k.value] = k.op ? k.op : i.op ? i.op : "=";
+        });
+      } else {
+        filter.data[i.key] = i.value ? JSON.parse(JSON.stringify(i.value)) : "";
+        defaultFilterFields[i.key] = i.value
+          ? JSON.parse(JSON.stringify(i.value))
+          : "";
+        filterOp[i.key] = i.op ? i.op : "=";
+      }
+    });
   }
+}
 
-  function reset() {
-    filter.data = { ...defaultFilterFields };
-    confirm();
-  }
-  function confirm() {
-    emit('filterCallback', composeFilter(filter.data, filterOp));
-  }
+function reset() {
+  filter.data = { ...defaultFilterFields };
+  confirm();
+}
+function confirm() {
+  emit("filterCallback", composeFilter(filter.data, filterOp));
+}
 
-  watchEffect(() => {
-    initData();
-  });
+watchEffect(() => {
+  initData();
+});
 </script>
 <style lang="scss" scoped>
-  .sa-filter {
-    padding: 14px 0 0;
-    flex-wrap: wrap;
-    .filter-item {
-      margin: 0 16px 14px 0;
-      .filter-content {
-        width: fit-content;
-      }
-    }
-    .filter-button {
-      margin: 0 16px 14px 0;
+.sa-filter {
+  padding: 14px 0 0;
+  flex-wrap: wrap;
+  .filter-item {
+    margin: 0 16px 14px 0;
+    .filter-content {
+      width: fit-content;
     }
   }
+  .filter-button {
+    margin: 0 16px 14px 0;
+  }
+}
 </style>

@@ -1,40 +1,40 @@
 <script setup>
-  import { storeToRefs } from 'pinia';
-  import router from '@/spring/router';
-  import { useAccountStore } from '@/spring/store/account';
-  import { ref } from 'vue';
+import { storeToRefs } from "pinia";
+import router from "../../../router";
+import { useAccountStore } from "../../../store/account";
+import { ref } from "vue";
 
-  // import { toLoginRoute } from '@/utils/routes';
-  // import { translateTitle } from '@/utils/i18n';
-  // import { VabRoute } from '/#/router';
-  //
-  // const route: VabRoute = useRoute();
-  // const router = useRouter();
-  //
-  const userStore = useAccountStore();
-  // const { avatar, username } = storeToRefs(userStore);
-  // const { logout } = userStore;
-  //
-  const active = ref(false);
+// import { toLoginRoute } from '@/utils/routes';
+// import { translateTitle } from '@/utils/i18n';
+// import { VabRoute } from '/#/router';
+//
+// const route: VabRoute = useRoute();
+// const router = useRouter();
+//
+const userStore = useAccountStore();
+// const { avatar, username } = storeToRefs(userStore);
+// const { logout } = userStore;
+//
+const active = ref(false);
 
-  const handleVisibleChange = (val) => {
-    active.value = val;
-  };
-  const handleCommand = async (command) => {
-    switch (command) {
-      case 'logout':
-        // await logout();
-        await userStore.logout();
-        await router.push('/login');
+const handleVisibleChange = (val) => {
+  active.value = val;
+};
+const handleCommand = async (command) => {
+  switch (command) {
+    case "logout":
+      // await logout();
+      await userStore.logout();
+      await router.push("/login");
 
-        // await router.push(toLoginRoute(route.fullPath));
-        break;
-      case 'personalCenter':
-        // await router.push('/setting/personalCenter');
-        await router.push({ name: 'admin.profile' });
-        break;
-    }
-  };
+      // await router.push(toLoginRoute(route.fullPath));
+      break;
+    case "personalCenter":
+      // await router.push('/setting/personalCenter');
+      await router.push({ name: "admin.profile" });
+      break;
+  }
+};
 </script>
 
 <template>
@@ -62,34 +62,34 @@
 </template>
 
 <style lang="scss" scoped>
-  .avatar-dropdown {
+.avatar-dropdown {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    margin-left: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .user-name {
+    position: relative;
     display: flex;
     align-content: center;
     align-items: center;
-    justify-content: center;
-    justify-items: center;
+    height: 40px;
+    margin-left: 6px;
+    line-height: 40px;
+    cursor: pointer;
 
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      margin-left: 15px;
-      cursor: pointer;
-      border-radius: 50%;
-    }
-
-    .user-name {
-      position: relative;
-      display: flex;
-      align-content: center;
-      align-items: center;
-      height: 40px;
-      margin-left: 6px;
-      line-height: 40px;
-      cursor: pointer;
-
-      [class*='ri-'] {
-        margin-left: 0 !important;
-      }
+    [class*="ri-"] {
+      margin-left: 0 !important;
     }
   }
+}
 </style>

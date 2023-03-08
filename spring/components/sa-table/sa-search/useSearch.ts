@@ -1,7 +1,7 @@
-import { useDrawer } from '@/spring/components/sa-drawer/useDrawer';
+import { useDrawer } from "../../sa-drawer/useDrawer";
 
 type TtinputprependType = {
-  type: 'tinputprepend';
+  type: "tinputprepend";
   label: string;
   field: string;
   placeholder?: string;
@@ -12,7 +12,7 @@ type TtinputprependType = {
 };
 
 type TselectType = {
-  type: 'tselect';
+  type: "tselect";
   label: string;
   field: string;
   value: string;
@@ -26,14 +26,14 @@ type TselectType = {
 };
 
 type TinputType = {
-  type: 'tinput';
+  type: "tinput";
   label: string;
   field: string;
   value: string;
 };
 
 type TdatetimerangeType = {
-  type: 'tdatetimerange';
+  type: "tdatetimerange";
   label: string;
   field: string;
   value: string[];
@@ -47,7 +47,7 @@ export type SearchOptions = {
         | TinputType
         | TselectType
         | TtinputprependType
-        | { type: 'default'; label: string; value: string };
+        | { type: "default"; label: string; value: string };
     };
     data: any;
     conditionLabel: any;
@@ -80,7 +80,7 @@ export function useSearch(options: SearchOptions) {
     });
   };
   const deleteFilter = (key) => {
-    if (options.filterParams.tools[key].type === 'tinputprepend') {
+    if (options.filterParams.tools[key].type === "tinputprepend") {
       options.filterParams.data[key] =
         options.filterParams.tools[key][options.filterParams.tools[key].field];
     } else {

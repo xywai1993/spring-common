@@ -11,44 +11,44 @@
   </div>
 </template>
 <script setup>
-  import { ref } from 'vue';
-  import { useRoute } from 'vue-router';
-  import { useAppStore } from '@/spring/store/app';
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { useAppStore } from "../../store/app";
 
-  const appStore = useAppStore();
+const appStore = useAppStore();
 
-  const taskbar = appStore.taskbar;
-  const route = useRoute();
-  const close = () => {
-    appStore.closeTaskbar(currentPageIndex);
-  };
+const taskbar = appStore.taskbar;
+const route = useRoute();
+const close = () => {
+  appStore.closeTaskbar(currentPageIndex);
+};
 
-  const second = ref(5);
-  const secondTime = ref();
-  function startTime() {
-    secondTime.value = setInterval(() => {
-      second.value--;
-      if (second.value == 0) {
-        clearInterval(secondTime.value);
-        close();
-      }
-    }, 1000);
-  }
-  startTime();
+const second = ref(5);
+const secondTime = ref();
+function startTime() {
+  secondTime.value = setInterval(() => {
+    second.value--;
+    if (second.value == 0) {
+      clearInterval(secondTime.value);
+      close();
+    }
+  }, 1000);
+}
+startTime();
 </script>
 <style lang="scss" scoped>
-  .error-index {
-    flex-direction: column;
-    color: var(--sa-font);
-    font-size: 16px;
-    img {
-      width: 280px;
-      height: 240px;
-      margin: -40px 0 24px 0;
-    }
-    .close {
-      color: var(--el-color-primary);
-      cursor: pointer;
-    }
+.error-index {
+  flex-direction: column;
+  color: var(--sa-font);
+  font-size: 16px;
+  img {
+    width: 280px;
+    height: 240px;
+    margin: -40px 0 24px 0;
   }
+  .close {
+    color: var(--el-color-primary);
+    cursor: pointer;
+  }
+}
 </style>

@@ -1,8 +1,8 @@
-import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { isEmpty } from 'lodash';
-import { useAppStore } from '@/spring/store/app';
-import { useAccountStore } from '@/spring/store/account';
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { isEmpty } from "lodash";
+import { useAppStore } from "../store/app";
+import { useAccountStore } from "../store/account";
 
 export function useApp() {
   const route = useRoute();
@@ -34,7 +34,7 @@ export function useApp() {
   // 菜单模板
   const menuStyle = computed(() => {
     let appRoute = getRouteByName(appName.value);
-    return appRoute?.meta?.menuStyle || 'element';
+    return appRoute?.meta?.menuStyle || "element";
   });
 
   // 获取应用路由
@@ -69,19 +69,19 @@ export function useApp() {
     let selectedApp = getAppByName(name);
 
     //1.如果是页面 则直接打开
-    if (selectedApp.type == 'page') {
+    if (selectedApp.type == "page") {
       appStore.changeApp(name);
 
       router.push({ name });
     }
 
     //2.如果是菜单 找菜单组件然后弹出
-    if (selectedApp.type == 'menu') {
+    if (selectedApp.type == "menu") {
       // 反选
       if (appName.value == name) {
         appStore.menuCollapse(true);
         setTimeout(() => {
-          appStore.changeApp('');
+          appStore.changeApp("");
         }, 150);
       } else {
         appStore.changeApp(name);

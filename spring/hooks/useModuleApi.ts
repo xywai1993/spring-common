@@ -1,5 +1,5 @@
-import { request, RequestOptions } from '@/spring/request';
-import { EXPORT } from '@/spring/request/export';
+import { request, RequestOptions } from "@/request";
+import { EXPORT } from "@/request/export";
 
 type GetListType = {
   list: any[];
@@ -35,22 +35,26 @@ export class ModuleApi<T extends string> {
   Post<P extends ObjectType>(url: string, data: any, options?: RequestOptions) {
     return request<P>(
       {
-        method: 'post',
+        method: "post",
         url: this.ModuleUrl(url),
         data,
       },
-      options,
+      options
     );
   }
 
-  Get<G extends ObjectType>(url: string, data: any = {}, options?: RequestOptions) {
+  Get<G extends ObjectType>(
+    url: string,
+    data: any = {},
+    options?: RequestOptions
+  ) {
     return request<G>(
       {
-        method: 'get',
+        method: "get",
         url: this.ModuleUrl(url),
         params: data,
       },
-      options,
+      options
     );
   }
   /**
@@ -59,7 +63,7 @@ export class ModuleApi<T extends string> {
    * @constructor
    */
   ModuleUrl(url: string) {
-    if (url.startsWith('/')) {
+    if (url.startsWith("/")) {
       return `${this.module}${url}`;
     } else {
       return `${this.module}/${url}`;
@@ -73,7 +77,7 @@ export class ModuleApi<T extends string> {
   GetList(queryData = {}, page = 1, page_size = 100) {
     const query = Object.assign({}, queryData, { page, page_size });
     return request<GetListType>({
-      method: 'get',
+      method: "get",
       url: this.API.getIndex,
       params: query,
     });
@@ -86,11 +90,11 @@ export class ModuleApi<T extends string> {
   PostStore(data: any, options?: RequestOptions) {
     return request(
       {
-        method: 'POST',
+        method: "POST",
         url: this.API.postStore,
         data,
       },
-      options,
+      options
     );
   }
 
@@ -101,7 +105,7 @@ export class ModuleApi<T extends string> {
    */
   GetDetail(id) {
     return request({
-      method: 'get',
+      method: "get",
       url: this.API.getInfo,
       params: { id },
     });
@@ -116,11 +120,11 @@ export class ModuleApi<T extends string> {
   PostUpdate(data: any, options?: RequestOptions) {
     return request(
       {
-        method: 'POST',
+        method: "POST",
         url: this.API.postUpdate,
         data,
       },
-      options,
+      options
     );
   }
 
@@ -133,11 +137,11 @@ export class ModuleApi<T extends string> {
   PostDel(id: string | string[], options?: RequestOptions) {
     return request(
       {
-        method: 'post',
+        method: "post",
         url: this.API.postDelete,
         params: { id },
       },
-      options,
+      options
     );
   }
 
@@ -147,7 +151,12 @@ export class ModuleApi<T extends string> {
    * @param options
    * @constructor
    */
-  PostExports(data: { doc_type: 'csv' | 'xlsx'; columns: string; filename: string; id?: string }) {
+  PostExports(data: {
+    doc_type: "csv" | "xlsx";
+    columns: string;
+    filename: string;
+    id?: string;
+  }) {
     // return request(
     //   {
     //     method: 'GET',

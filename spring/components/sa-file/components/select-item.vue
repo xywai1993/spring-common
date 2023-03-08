@@ -1,8 +1,19 @@
 <template>
   <el-main class="sa-p-b-0" v-loading="loading">
     <el-row :gutter="10" v-if="fileList.length > 0">
-      <el-col v-for="item in fileList" :key="item" :xs="8" :sm="6" :md="4" :lg="3" :xl="3">
-        <div class="file-item" :class="isSelected(item) != -1 ? 'file-item-selected' : ''">
+      <el-col
+        v-for="item in fileList"
+        :key="item"
+        :xs="8"
+        :sm="6"
+        :md="4"
+        :lg="3"
+        :xl="3"
+      >
+        <div
+          class="file-item"
+          :class="isSelected(item) != -1 ? 'file-item-selected' : ''"
+        >
           <div class="item-tools">
             <div class="item-select-more sa-flex sa-row-between">
               <el-checkbox
@@ -20,7 +31,10 @@
             </div>
 
             <!-- 重命名 -->
-            <div v-if="rename.flag && contextmenuItem == item" class="item-rename sa-flex">
+            <div
+              v-if="rename.flag && contextmenuItem == item"
+              class="item-rename sa-flex"
+            >
               <el-icon class="sa-m-r-4" @click="onConfirmRename">
                 <Check />
               </el-icon>
@@ -39,7 +53,10 @@
               <template v-if="item.mimetype.includes('image')">
                 <sa-image size="80" :url="item.url" radius="8"></sa-image>
               </template>
-              <type-icon v-if="!item.mimetype.includes('image')" :name="item.extension"></type-icon>
+              <type-icon
+                v-if="!item.mimetype.includes('image')"
+                :name="item.extension"
+              ></type-icon>
             </template>
           </div>
           <!-- 文件名称 -->
@@ -62,7 +79,9 @@
                   </div>
                   <div v-if="item.mimetype.includes('image')" class="sa-flex">
                     <div class="label">高度：</div>
-                    <div class="value sa-line-1"> {{ item.image_height }} px </div>
+                    <div class="value sa-line-1">
+                      {{ item.image_height }} px
+                    </div>
                   </div>
                 </template>
                 <div class="sa-flex">
@@ -88,7 +107,10 @@
               </div>
               <template #reference>
                 <div>
-                  <div v-if="!rename.flag || contextmenuItem != item" class="item-title sa-line-1">
+                  <div
+                    v-if="!rename.flag || contextmenuItem != item"
+                    class="item-title sa-line-1"
+                  >
                     {{ item.filename }}
                   </div>
                 </div>
@@ -107,7 +129,9 @@
     <!-- 右键 -->
     <v-contextmenu ref="contextmenu">
       <v-contextmenu-item
-        v-if="contextmenuItem.mimetype && contextmenuItem.mimetype.includes('image')"
+        v-if="
+          contextmenuItem.mimetype && contextmenuItem.mimetype.includes('image')
+        "
         @click="onPreview"
         >查看</v-contextmenu-item
       >
@@ -116,14 +140,20 @@
         class="delete-contextmenu"
         :class="isPopconfirm ? 'v-contextmenu-item--hover' : ''"
       >
-        <span class="popconfirm-button" @click.stop="onPopconfirm(true)">删除</span>
+        <span class="popconfirm-button" @click.stop="onPopconfirm(true)"
+          >删除</span
+        >
         <div v-if="isPopconfirm" class="popconfirm-content">
-          <div
-            ><el-icon><QuestionFilled /></el-icon>确认删除?</div
-          >
+          <div>
+            <el-icon><QuestionFilled /></el-icon>确认删除?
+          </div>
           <div class="action">
-            <el-button size="small" link @click.stop="onPopconfirm(false)">取消</el-button>
-            <el-button type="primary" size="small" @click="onDelete">确定</el-button>
+            <el-button size="small" link @click.stop="onPopconfirm(false)"
+              >取消</el-button
+            >
+            <el-button type="primary" size="small" @click="onDelete"
+              >确定</el-button
+            >
           </div>
         </div>
       </v-contextmenu-item>
@@ -141,7 +171,9 @@
         @click="onRename"
         >重命名</v-contextmenu-item
       >
-      <v-contextmenu-item v-if="checkAuth('file.admin.file.move')" @click="onMove()"
+      <v-contextmenu-item
+        v-if="checkAuth('file.admin.file.move')"
+        @click="onMove()"
         >移动</v-contextmenu-item
       >
     </v-contextmenu>
@@ -161,7 +193,11 @@
           <span>{{ props.selected.length }}</span>
           项
         </span>
-        <el-popover v-model:visible="deletePopoverVisible" placement="top" trigger="click">
+        <el-popover
+          v-model:visible="deletePopoverVisible"
+          placement="top"
+          trigger="click"
+        >
           <el-checkbox v-model="is_real" label="1">是否删除文件</el-checkbox>
           <div class="delete-tools sa-flex sa-row-right">
             <el-button
@@ -172,7 +208,11 @@
             >
               取消
             </el-button>
-            <el-button class="is-link" type="primary" size="small" @click="onDelete('batch')"
+            <el-button
+              class="is-link"
+              type="primary"
+              size="small"
+              @click="onDelete('batch')"
               >确定</el-button
             >
           </div>
@@ -210,345 +250,351 @@
   </sa-view-bar>
 </template>
 <script>
-  import { directive } from 'v-contextmenu';
-  import { cloneDeep } from 'lodash';
-  export default {
-    name: 'SelectItem',
-    directives: {
-      contextmenu: directive,
-    },
-  };
+import { directive } from "v-contextmenu";
+
+export default {
+  name: "SelectItem",
+  directives: {
+    contextmenu: directive,
+  },
+};
 </script>
 <script setup>
-  import { reactive, ref } from 'vue';
-  import fileApi from '../api';
-  import { checkUrl } from '@/spring/utils/checkUrlSuffix';
-  import { useModal } from '@/spring/hooks';
-  import { ElMessage } from 'element-plus';
-  import TypeIcon from './type-icon.vue';
-  import MoveGroup from './move-group.vue';
-  import FileCropper from './file-cropper.vue';
-  import { checkAuth } from '@/spring/directives/auth';
+import { reactive, ref } from "vue";
+import fileApi from "../api";
+import { checkUrl } from "../../../utils/checkUrlSuffix";
+import { useModal } from "../../../hooks";
+import { ElMessage } from "element-plus";
+import TypeIcon from "./type-icon.vue";
+import MoveGroup from "./move-group.vue";
+import FileCropper from "./file-cropper.vue";
+import { checkAuth } from "../../../directives/auth";
 
-  const emit = defineEmits(['updateFileList', 'updateSelected']);
-  const props = defineProps({
-    loading: {
-      type: Boolean,
-      default: true,
-    },
-    fileList: {
-      type: Array,
-      default: [],
-    },
-    page: {
-      type: Object,
-    },
-    type: {
-      type: String,
-      default: 'index',
-    },
-    multiple: {
-      type: Boolean,
-      default: false,
-    },
-    max: {
-      type: [String, Number],
-    },
-    leng: {
-      type: [String, Number],
-      default: 0,
-    },
-    selected: {
-      type: Object,
-    },
-    group: {
-      type: String,
-    },
-    savelog: {
-      type: [String, Number],
-    },
-  });
+const emit = defineEmits(["updateFileList", "updateSelected"]);
+const props = defineProps({
+  loading: {
+    type: Boolean,
+    default: true,
+  },
+  fileList: {
+    type: Array,
+    default: [],
+  },
+  page: {
+    type: Object,
+  },
+  type: {
+    type: String,
+    default: "index",
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
+  },
+  max: {
+    type: [String, Number],
+  },
+  leng: {
+    type: [String, Number],
+    default: 0,
+  },
+  selected: {
+    type: Object,
+  },
+  group: {
+    type: String,
+  },
+  savelog: {
+    type: [String, Number],
+  },
+});
 
-  function selectedFile(item) {
-    if (props.type == 'index') {
+function selectedFile(item) {
+  if (props.type == "index") {
+    isSelected(item) != -1
+      ? props.selected.splice(isSelected(item), 1)
+      : props.selected.push(item);
+  }
+  if (props.type == "select") {
+    // 单选
+    if (!props.multiple) {
+      props.selected.length = 0;
       isSelected(item) != -1
         ? props.selected.splice(isSelected(item), 1)
         : props.selected.push(item);
     }
-    if (props.type == 'select') {
-      // 单选
-      if (!props.multiple) {
-        props.selected.length = 0;
+    // 多选
+    if (props.multiple) {
+      // 限制
+      if (props.max) {
+        if (
+          isSelected(item) == -1 &&
+          props.selected.length == props.max - props.leng
+        ) {
+          ElMessage({
+            message: "已到选择上限",
+            type: "warning",
+          });
+        }
+        isSelected(item) != -1
+          ? props.selected.splice(isSelected(item), 1)
+          : props.selected.length < props.max - props.leng
+          ? props.selected.push(item)
+          : "";
+      } else {
+        // 不限制
         isSelected(item) != -1
           ? props.selected.splice(isSelected(item), 1)
           : props.selected.push(item);
       }
-      // 多选
-      if (props.multiple) {
-        // 限制
-        if (props.max) {
-          if (isSelected(item) == -1 && props.selected.length == props.max - props.leng) {
-            ElMessage({
-              message: '已到选择上限',
-              type: 'warning',
-            });
-          }
-          isSelected(item) != -1
-            ? props.selected.splice(isSelected(item), 1)
-            : props.selected.length < props.max - props.leng
-            ? props.selected.push(item)
-            : '';
+    }
+  }
+}
+// checkbox选中
+function isSelected(item) {
+  return props.selected.findIndex((s) => s.id == item.id);
+}
+
+// v-contextmenu 操作
+const contextmenuItem = ref("");
+function onContextmenu(item) {
+  contextmenuItem.value = item;
+
+  isPopconfirm.value = false;
+}
+
+// 查看/图片预览
+const previewVisible = ref(false);
+const previewUrl = ref(null);
+function onPreview() {
+  previewUrl.value = checkUrl(contextmenuItem.value.url);
+  previewVisible.value = true;
+}
+
+// 删除
+const is_real = ref(0);
+const deletePopoverVisible = ref(false);
+async function onDelete(type) {
+  if (type == "batch") {
+    let ids = [];
+    props.selected.forEach((i) => {
+      ids.push(i.id);
+    });
+    await fileApi.delete(ids.join(","), is_real.value);
+    deletePopoverVisible.value = false;
+    is_real.value = 0;
+    props.selected.length = 0;
+  } else {
+    await fileApi.delete(contextmenuItem.value.id);
+  }
+
+  isPopconfirm.value && (isPopconfirm.value = false);
+
+  emit("updateFileList");
+}
+
+const isPopconfirm = ref(false);
+function onPopconfirm(type) {
+  isPopconfirm.value = type;
+}
+
+// 裁剪
+function onCropper() {
+  useModal(
+    FileCropper,
+    {
+      title: "图片剪裁",
+      type: "select",
+      cropper: contextmenuItem.value,
+    },
+    {
+      confirm: async (res) => {
+        var formData = new FormData();
+        formData.append("file", res.data);
+        await fileApi.upload(
+          { group: props.group, savelog: props.savelog },
+          formData
+        );
+        emit("updateFileList");
+      },
+    }
+  );
+}
+
+// 重命名
+function onRename() {
+  const filename = cloneDeep(contextmenuItem.value.filename);
+  const k = filename.lastIndexOf(".");
+  rename.name = filename.substr(0, k);
+  rename.flag = true;
+}
+const rename = reactive({
+  name: "",
+  flag: "",
+});
+async function onConfirmRename() {
+  await fileApi.rename(contextmenuItem.value.id, { filename: rename.name });
+  onCancelRename();
+  emit("updateFileList");
+}
+function onCancelRename() {
+  rename.flag = false;
+}
+
+// 移动
+function onMove(type) {
+  useModal(
+    MoveGroup,
+    {
+      title: "移动分组",
+      class: "filemanager-group-dialog",
+    },
+    {
+      confirm: async (res) => {
+        if (type == "batch") {
+          let ids = [];
+          props.selected.forEach((d) => {
+            ids.push(d.id);
+          });
+          await fileApi.move(ids.join(","), { group: res.data });
+          props.selected.length = 0;
         } else {
-          // 不限制
-          isSelected(item) != -1
-            ? props.selected.splice(isSelected(item), 1)
-            : props.selected.push(item);
+          await fileApi.move(contextmenuItem.value.id, { group: res.data });
         }
-      }
+        emit("updateFileList");
+      },
     }
-  }
-  // checkbox选中
-  function isSelected(item) {
-    return props.selected.findIndex((s) => s.id == item.id);
-  }
-
-  // v-contextmenu 操作
-  const contextmenuItem = ref('');
-  function onContextmenu(item) {
-    contextmenuItem.value = item;
-
-    isPopconfirm.value = false;
-  }
-
-  // 查看/图片预览
-  const previewVisible = ref(false);
-  const previewUrl = ref(null);
-  function onPreview() {
-    previewUrl.value = checkUrl(contextmenuItem.value.url);
-    previewVisible.value = true;
-  }
-
-  // 删除
-  const is_real = ref(0);
-  const deletePopoverVisible = ref(false);
-  async function onDelete(type) {
-    if (type == 'batch') {
-      let ids = [];
-      props.selected.forEach((i) => {
-        ids.push(i.id);
-      });
-      await fileApi.delete(ids.join(','), is_real.value);
-      deletePopoverVisible.value = false;
-      is_real.value = 0;
-      props.selected.length = 0;
-    } else {
-      await fileApi.delete(contextmenuItem.value.id);
-    }
-
-    isPopconfirm.value && (isPopconfirm.value = false);
-
-    emit('updateFileList');
-  }
-
-  const isPopconfirm = ref(false);
-  function onPopconfirm(type) {
-    isPopconfirm.value = type;
-  }
-
-  // 裁剪
-  function onCropper() {
-    useModal(
-      FileCropper,
-      {
-        title: '图片剪裁',
-        type: 'select',
-        cropper: contextmenuItem.value,
-      },
-      {
-        confirm: async (res) => {
-          var formData = new FormData();
-          formData.append('file', res.data);
-          await fileApi.upload({ group: props.group, savelog: props.savelog }, formData);
-          emit('updateFileList');
-        },
-      },
-    );
-  }
-
-  // 重命名
-  function onRename() {
-    const filename = cloneDeep(contextmenuItem.value.filename);
-    const k = filename.lastIndexOf('.');
-    rename.name = filename.substr(0, k);
-    rename.flag = true;
-  }
-  const rename = reactive({
-    name: '',
-    flag: '',
-  });
-  async function onConfirmRename() {
-    await fileApi.rename(contextmenuItem.value.id, { filename: rename.name });
-    onCancelRename();
-    emit('updateFileList');
-  }
-  function onCancelRename() {
-    rename.flag = false;
-  }
-
-  // 移动
-  function onMove(type) {
-    useModal(
-      MoveGroup,
-      {
-        title: '移动分组',
-        class: 'filemanager-group-dialog',
-      },
-      {
-        confirm: async (res) => {
-          if (type == 'batch') {
-            let ids = [];
-            props.selected.forEach((d) => {
-              ids.push(d.id);
-            });
-            await fileApi.move(ids.join(','), { group: res.data });
-            props.selected.length = 0;
-          } else {
-            await fileApi.move(contextmenuItem.value.id, { group: res.data });
-          }
-          emit('updateFileList');
-        },
-      },
-    );
-  }
+  );
+}
 </script>
 <style lang="scss" scoped>
-  .file-item {
-    margin: 0 0 24px 0;
-    padding: 12px 12px 8px;
-    border-radius: 8px;
+.file-item {
+  margin: 0 0 24px 0;
+  padding: 12px 12px 8px;
+  border-radius: 8px;
 
-    .item-tools {
-      height: 20px;
-      margin-bottom: 4px;
-      position: relative;
-      .el-icon {
-        font-size: 14px;
+  .item-tools {
+    height: 20px;
+    margin-bottom: 4px;
+    position: relative;
+    .el-icon {
+      font-size: 14px;
+      &:hover {
+        color: var(--el-color-primary);
+      }
+      &.close {
         &:hover {
-          color: var(--el-color-primary);
+          color: #ff4d4f;
         }
-        &.close {
-          &:hover {
-            color: #ff4d4f;
-          }
-        }
-      }
-      .item-select-more {
-        height: 20px;
-        display: none;
-      }
-      .item-rename {
-        height: 20px;
-        background: var(--sa-background-assist);
-        border-radius: 2px;
-        padding: 0 4px;
-        position: absolute;
-        top: 0;
-        right: 0;
       }
     }
+    .item-select-more {
+      height: 20px;
+      display: none;
+    }
+    .item-rename {
+      height: 20px;
+      background: var(--sa-background-assist);
+      border-radius: 2px;
+      padding: 0 4px;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
 
-    .item-icon {
-      width: 100%;
-      padding: 100% 0 0;
-      margin-bottom: 4px;
-      position: relative;
-      cursor: pointer;
-      .sa-image {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-      }
-      .sa-image,
-      .el-image {
-        width: inherit !important;
-        height: inherit !important;
+  .item-icon {
+    width: 100%;
+    padding: 100% 0 0;
+    margin-bottom: 4px;
+    position: relative;
+    cursor: pointer;
+    .sa-image {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .sa-image,
+    .el-image {
+      width: inherit !important;
+      height: inherit !important;
+    }
+  }
+  .item-title-content {
+    height: 32px;
+    line-height: 32px;
+    .title-popover {
+      & > div {
+        margin: 0 0 4px 0;
       }
     }
-    .item-title-content {
-      height: 32px;
-      line-height: 32px;
-      .title-popover {
-        & > div {
-          margin: 0 0 4px 0;
-        }
-      }
-      .item-title {
-        width: inherit;
-        font-size: 14px;
-        text-align: center;
-      }
+    .item-title {
+      width: inherit;
+      font-size: 14px;
+      text-align: center;
     }
+  }
 
-    &:hover {
-      background: var(--t-bg-hover);
-      border-radius: 8px;
-      .item-select-more {
-        display: flex;
-      }
-    }
-    &.file-item-selected {
-      background: var(--t-bg-hover);
-      .item-select-more {
-        display: flex;
-      }
+  &:hover {
+    background: var(--t-bg-hover);
+    border-radius: 8px;
+    .item-select-more {
+      display: flex;
     }
   }
-  .sa-view-bar {
-    box-shadow: none !important;
-    .tip {
-      font-size: 12px;
-      color: var(--sa-font);
+  &.file-item-selected {
+    background: var(--t-bg-hover);
+    .item-select-more {
+      display: flex;
     }
   }
-  .delete-tools {
-    height: 16px;
-    .cancel {
-      color: var(--sa-subfont);
-      margin-right: 16px;
-    }
+}
+.sa-view-bar {
+  box-shadow: none !important;
+  .tip {
+    font-size: 12px;
+    color: var(--sa-font);
   }
+}
+.delete-tools {
+  height: 16px;
+  .cancel {
+    color: var(--sa-subfont);
+    margin-right: 16px;
+  }
+}
 </style>
 
 <style lang="scss">
-  .delete-contextmenu {
-    padding: 0 !important;
-    .popconfirm-button {
-      padding: 5px 14px;
-      width: 100%;
+.delete-contextmenu {
+  padding: 0 !important;
+  .popconfirm-button {
+    padding: 5px 14px;
+    width: 100%;
+  }
+  .popconfirm-content {
+    position: absolute;
+    width: fit-content;
+    min-width: 150px;
+    height: 70px;
+    background: var(--sa-background-assist);
+    top: -40px;
+    right: 50%;
+    margin-right: -72px;
+    padding: 12px;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    color: var(--sa-subtitle);
+    .el-icon {
+      color: rgb(255, 153, 0);
+      margin-right: 5px;
     }
-    .popconfirm-content {
-      position: absolute;
-      width: fit-content;
-      min-width: 150px;
-      height: 70px;
-      background: var(--sa-background-assist);
-      top: -40px;
-      right: 50%;
-      margin-right: -72px;
-      padding: 12px;
-      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-      border-radius: 4px;
-      color: var(--sa-subtitle);
-      .el-icon {
-        color: rgb(255, 153, 0);
-        margin-right: 5px;
-      }
-      .action {
-        margin-top: 8px;
-        text-align: right;
-      }
+    .action {
+      margin-top: 8px;
+      text-align: right;
     }
   }
+}
 </style>

@@ -24,7 +24,7 @@
     "removeComments": true,
     "types": ["node", "vite/client"],
     "paths": {
-      "@/*": ["spring/*"]
+
     }
   },
   "include": [

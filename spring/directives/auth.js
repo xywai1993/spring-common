@@ -1,5 +1,5 @@
-import { isString, isArray } from 'lodash';
-import { useAccountStore } from '@/spring/store/account';
+import { isString, isArray } from "lodash";
+import { useAccountStore } from "../store/account";
 
 const auth = {
   mounted(el, binding) {

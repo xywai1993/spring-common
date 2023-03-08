@@ -48,10 +48,10 @@
                     <div class="label">密码</div>
                   </template>
                   <template #suffix>
-                    <span v-if="showPwd" @click="showPwd = false">
+                    <span v-if="showPwd" ../..click="showPwd = false">
                       <sa-svg name="sa-password-hide" size="24"></sa-svg>
                     </span>
-                    <span v-if="!showPwd" @click="showPwd = true">
+                    <span v-if="!showPwd" ../..click="showPwd = true">
                       <sa-svg name="sa-password-show" size="24"></sa-svg>
                     </span>
                   </template>
@@ -70,7 +70,7 @@
                   </el-input>
                   <img
                     :src="codeImage"
-                    @click="refreshCodeImage"
+                    ../..click="refreshCodeImage"
                     class="mode-code-image"
                   />
                 </el-form-item>
@@ -81,18 +81,18 @@
               <div>
                 <el-checkbox
                   v-model="login.last.rememberMe"
-                  @change="changeRememberMe"
+                  ../..change="changeRememberMe"
                   label="记住我"
                 ></el-checkbox>
               </div>
               <el-button
                 type="primary"
                 :loading="loginLoading"
-                @click="accountLogin"
+                ../..click="accountLogin"
                 >登录
               </el-button>
               <div class="login-or sa-flex sa-row-center">或</div>
-              <el-button @click="thirdLogin">
+              <el-button ../..click="thirdLogin">
                 <sa-svg
                   class="sa-m-r-8"
                   name="sa-login-wechat"
@@ -142,10 +142,10 @@
                     <div class="label">密码</div>
                   </template>
                   <template #suffix>
-                    <span v-if="showPwd" @click="showPwd = false">
+                    <span v-if="showPwd" ../..click="showPwd = false">
                       <sa-svg name="sa-password-hide" size="24"></sa-svg>
                     </span>
-                    <span v-if="!showPwd" @click="showPwd = true">
+                    <span v-if="!showPwd" ../..click="showPwd = true">
                       <sa-svg name="sa-password-show" size="24"></sa-svg>
                     </span>
                   </template>
@@ -164,7 +164,7 @@
                   </el-input>
                   <img
                     :src="codeImage"
-                    @click="refreshCodeImage"
+                    ../..click="refreshCodeImage"
                     class="mode-code-image"
                   />
                 </el-form-item>
@@ -175,11 +175,11 @@
               <el-button
                 type="primary"
                 :loading="loginLoading"
-                @click="accountLogin"
+                ../..click="accountLogin"
                 >登录
               </el-button>
               <div class="login-or sa-flex sa-row-center">或</div>
-              <el-button @click="changeLoginType('input')">
+              <el-button ../..click="changeLoginType('input')">
                 使用其他账号登录
               </el-button>
             </el-form>
@@ -210,7 +210,7 @@
                 <div class="tip-code">二维码已过期</div>
                 <div
                   class="tip-refresh sa-flex sa-row-center"
-                  @click="thirdLogin"
+                  ../..click="thirdLogin"
                 >
                   <el-icon>
                     <RefreshRight />
@@ -239,7 +239,7 @@
                 <div class="tip-code">未配置微信公众平台</div>
                 <div
                   class="tip-refresh sa-flex sa-row-center"
-                  @click="thirdLogin"
+                  ../..click="thirdLogin"
                 >
                   <el-icon>
                     <RefreshRight />
@@ -251,7 +251,7 @@
             <div class="scan-tip">请使用微信扫描二维码登录</div>
             <div
               class="back-input sa-flex sa-flex-center"
-              @click="changeLoginType('input')"
+              ../..click="changeLoginType('input')"
             >
               <el-icon>
                 <ArrowLeft />
@@ -276,13 +276,12 @@ import {
   onUnmounted,
 } from "vue";
 
-import router from "@/spring/router";
+import router from "../../router";
 import { useRoute } from "vue-router";
-import storage from "@/spring/utils/storage";
-import sheep from "@/spring";
-import { checkUrl } from "@/spring/utils/checkUrlSuffix";
-import { useAccountStore } from "@/spring/store/account";
-import { useAppStore } from "@/spring/store/app";
+import storage from "../../utils/storage";
+import { checkUrl } from "../../utils/checkUrlSuffix";
+import { useAccountStore } from "../../store/account";
+import { useAppStore } from "../../store/app";
 
 const accountStore = useAccountStore();
 const appStore = useAppStore();
@@ -587,7 +586,7 @@ async function thirdLogin() {
   background-color: var(--sa-background-assist);
   background-image: url("assets/background.jpg");
 
-  @media only screen and (max-width: 768px) {
+  ../..media only screen and (max-width: 768px) {
     background-position: center;
   }
 
@@ -599,7 +598,7 @@ async function thirdLogin() {
       align-items: center;
     }
 
-    @media only screen and (max-width: 992px) {
+    ../..media only screen and (max-width: 992px) {
       .el-col {
         justify-content: center;
       }
@@ -719,7 +718,7 @@ async function thirdLogin() {
     }
   }
 
-  @media only screen and (max-width: 768px) {
+  ../..media only screen and (max-width: 768px) {
     .login-wrap {
       width: 100%;
       max-width: unset;

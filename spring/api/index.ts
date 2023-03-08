@@ -38,7 +38,7 @@ export function currentUser() {
 export function getServerMenu() {
   return request(
     {
-      url: "/access/index",
+      url: "access/index",
     },
     {
       isGetDataDirectly: false,
