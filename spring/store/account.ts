@@ -74,7 +74,7 @@ export const useAccountStore = defineStore({
      * @param {*} token
      */
     setToken(token = "") {
-      this.token = token;
+      // this.token = token;
       if (token === "") {
         this.isLogin = false;
         $storage.remove("token");
@@ -88,7 +88,7 @@ export const useAccountStore = defineStore({
      * @description 获取用户信息
      */
     async getInfo() {
-      const { code, data } = await currentUser();
+      const { data } = await currentUser();
       this.info = data;
       return data;
     },

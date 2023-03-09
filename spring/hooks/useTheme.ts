@@ -25,7 +25,7 @@ export function setDarkMode(modeName = "") {
 // 引入主题样式
 function createThemeLink() {
   const appLayout = useAppStore().layout;
-  const html = document.querySelector("html");
+  const html = document.querySelector("html")!;
   html.className = "";
   html.classList.add("mode-" + appLayout.darkMode);
   html.classList.add("theme-" + appLayout.theme);
